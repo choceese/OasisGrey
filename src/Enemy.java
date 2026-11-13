@@ -57,10 +57,10 @@ public class Enemy {
         for (Intent option : options) {
             totalWeights += option.weight;
         }
-        int roll = rand.nextInt(totalWeights);
+        int roll = rand.nextInt(totalWeights); //60
         int runningWeight = 0;
         for (Intent option : options) {
-            runningWeight += option.weight;
+            runningWeight += option.weight; 
             if (roll < runningWeight) {
                 currentIntent = option;
                 return;

@@ -18,14 +18,23 @@ public class Main {
             new Intent("Ping", "ATTACK", 4, 70)
         };
         Enemy surveyDrone = new Enemy("Survey Drone", 12, surveyDroneOptions);
+
         Intent[] stakeBotOptions = {
-            new Intent("null", null, 0, 0)
+            new Intent("Stake Strike", "ATTACK", 5, 55),
+            new Intent("Protect", "BLOCK", 5, 45)
+        };
+        Enemy stakeBot = new Enemy("Stake Bot", 16, stakeBotOptions);
+        
+        int blocks = 0;
+        int attacks = 0;
+        for (int i = 0; i < 1000; i++) {
+            stakeBot.chooseIntent();
+            if (stakeBot.getCurrentIntent().label.equals("Protect")) {
+                blocks++;
+            } else {
+                attacks++;
+            }
         }
-        Enemy stakeBot = new Enemy("Stake Bot", 16, 16, 5, 0, 0,
-            new String[]{"BLOCK", "BLOCK", "ATTACK", "ATTACK"},
-            new int[]{5, 5, 5, 5}
-        );
-
-
+        System.out.println("Blocks: " + blocks + ", Attacks: " + attacks);
     }
 }
