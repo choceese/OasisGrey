@@ -14,4 +14,7 @@ class Intent {
     String describe() {
         return label + ": " + type + " " + value;
     }
+    String getName() {
+        return type;
+    }
 }

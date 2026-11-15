@@ -2,13 +2,16 @@ public class Animal {
         private String name;
         private int hp;
         private int maxHP;
-        private int block;
+        private int block = 0;
         private boolean retire;
+        private int markBonus;
+        private int basicDamage;
 
-        Animal (String name, int hp, int maxHP) { //retire is "is the animal dead or not?"
+        Animal (String name, int hp, int maxHP, int basicDamage) { //retire is "is the animal dead or not?"
             this.name = name;
             this.hp = hp;
             this.maxHP = maxHP;
+            this.basicDamage = basicDamage;
             block = 0;
             retire = false;
         }
@@ -16,11 +19,16 @@ public class Animal {
             System.out.println(name);
             System.out.println("HP: " + hp + "/" + maxHP);
         }
-        public void takeDamage(int damage) {
-            hp -= damage;
-            if (hp < 0) {
-                hp = 0;
-            }
+        public void mark(int bonus) {
+            markBonus += bonus;
+        }
+        public void takeDamage(int amount) {
+            amount += markBonus;
+            markBonus = 0;
+            int absorbed = Math.min(block, amount);
+            block -= absorbed;
+            amount -= absorbed;
+            hp = Math.max(0, hp - amount);
         }
         public void heal(int healAmount) {
             hp += healAmount;
@@ -31,14 +39,24 @@ public class Animal {
         }
         public boolean isKnockedOut() {
             if (hp == 0) {
-                System.out.println(name + "= dead");
                 return true;
             }
             else {
-                System.out.println(name + "= alive");
                 return false;
             }
     
+        }
+        public String getName() {
+            return name;
+        }
+        public int getHP() {
+            return hp;
+        }
+        public int getMaxHp() {
+            return maxHP;
+        }
+        public int getBasic() {
+            return basicDamage;
         }
         
             

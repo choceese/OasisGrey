@@ -3,13 +3,14 @@ public class Enemy {
     private int hp;
     private int maxHP;
     private int attack;
-    private int block;
+    private int block = 0;
     private String name;
     private int heat;
     private int turnCounter;
-    Intent[] options;
-    Intent currentIntent;
+    private Intent[] options;
+    private Intent currentIntent;
     private Random rand = new Random();
+    private int markBonus;
 
     public Enemy(String name, int maxHP, Intent[] options) {
         this.name = name;
@@ -21,43 +22,45 @@ public class Enemy {
         System.out.println(name);
         System.out.println("HP: " + hp + "/" + maxHP);
     }
-    public void takeDamage(int damage) {
-            hp -= damage;
-            if (hp < 0) {
-                hp = 0;
-            }
-        }
-    public void gainBlock(int damage) {
-        damage -= block;
-        if (damage < 0) {
-            damage = 0;
-        }
-        hp -= damage;
+    public void takeDamage(int amount) {
+        int absorbed = Math.min(block, amount);
+        block -= absorbed;
+        amount -= absorbed;
+        hp = Math.max(0, hp - amount);
+        System.out.println(name + " takes " + amount + " damage!");
+}
+    public void gainBlock(int amount) {
+        block += amount;
     }
+
+    public void resetBlock() {
+        block = 0;
+    }
+    
+    
     public void heal(int healAmount) {
             hp += healAmount;
             if (hp > maxHP) {
                 hp = maxHP;
             }
             
-        }
+    }
     public boolean isKnockedOut() {
             if (hp == 0) {
-                System.out.println(name + "= dead");
                 return true;
             }
             else {
-                System.out.println(name + "= alive");
                 return false;
             }
         
-        }
-    public void chooseIntent() {
+    }
+    
+    public void chooseIntent() { //this assigns value to Enemy's currentIntent field
         int totalWeights = 0;
         for (Intent option : options) {
             totalWeights += option.weight;
         }
-        int roll = rand.nextInt(totalWeights); //60
+        int roll = rand.nextInt(totalWeights); 
         int runningWeight = 0;
         for (Intent option : options) {
             runningWeight += option.weight; 
@@ -69,6 +72,15 @@ public class Enemy {
     }
     public Intent getCurrentIntent() {
         return currentIntent;
+    }
+    public String getName() {
+        return name;
+    }
+    public int getMaxHp() {
+        return maxHP;
+    }
+    public int getHP() {
+        return hp;
     }
     
 
