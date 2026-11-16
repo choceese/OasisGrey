@@ -212,6 +212,9 @@ public class Battle {
     }
     public void enemyPhase() {
         for (Enemy e : enemies) {
+            e.resetBlock();
+        }
+        for (Enemy e : enemies) {
             if (e != null && !e.isKnockedOut()) {
                 executeIntent(e);
             }
