@@ -3,7 +3,6 @@ public class Animal {
         private int hp;
         private int maxHP;
         private int block = 0;
-        private boolean retire;
         private int markBonus;
         private int basicDamage;
 
@@ -13,7 +12,6 @@ public class Animal {
             this.maxHP = maxHP;
             this.basicDamage = basicDamage;
             block = 0;
-            retire = false;
         }
         public void describe () {
             System.out.println(name);

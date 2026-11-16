@@ -92,6 +92,7 @@ public class Battle {
             int choice = readNumber(enemies.length);
             
             if (enemies[choice - 1] != null && !enemies[choice - 1].isKnockedOut()) {
+                clearScreen();
                 return enemies[choice - 1];
             }
         }
@@ -101,17 +102,41 @@ public class Battle {
         int damage = a.getBasic();
         e.takeDamage(damage);
     }
+    public static void clearScreen() {
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+    }
+
     public void showBattleState() {
         System.out.println(" ");
         System.out.println(" ");
         System.out.println(">>>>>TURN " + turnCounter + " <<<<<");
         System.out.println(" ");
         for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i] != null && enemies[i].isKnockedOut()) {
+                String dead = "(dead)";
+                System.out.printf("%-28s", dead);
+            }
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
-                System.out.println((i + 1) + ") " + enemies[i].getName() + "(" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")");
+                String guy = enemies[i].getName() + "(" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")";
+                System.out.printf("%-28s", guy);
             }
         }
+        System.out.println(" ");
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i] != null && enemies[i].isKnockedOut()) {
+                System.out.printf("%-28s", " ");
+            }
+            if (enemies[i] != null && !enemies[i].isKnockedOut()) {
+                Intent intent = enemies[i].getCurrentIntent();
+                String declaration = "[Is planning to " + intent.type + "]";
+                System.out.printf("%-28s", declaration);
+            }
+        }
+        System.out.println(" ");
+        System.out.println("   ");
         System.out.println("=======");
+        System.out.println("   ");
         for (int i = 0; i < party.length; i++) {
             if (party[i] != null && !party[i].isKnockedOut()) {
                 System.out.println(party[i].getName() + "(" + party[i].getHP() + "/" + party[i].getMaxHp() + ")");
@@ -119,7 +144,10 @@ public class Battle {
         }
     }
     public void animalTurn(Animal a) {
+        System.out.println(" ");
+        System.out.println(" ");
         System.out.println("It's " + a.getName() + "'s turn");
+        System.out.println(" ");
         System.out.println("(1)Head Ram: deal 7 damage to an enemy");
         System.out.println("(2)Cliff Charge: deal 21 damage to an enemy with full health");
         int choiceInput = readNumber(2);
@@ -199,6 +227,7 @@ public class Battle {
             }
             enemyPhase();
             endRound();
+            
         }
         if (isPartyDefeated()) {
             System.out.println(" ");

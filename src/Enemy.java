@@ -11,12 +11,15 @@ public class Enemy {
     private Intent currentIntent;
     private Random rand = new Random();
     private int markBonus;
+    private boolean usesCycle;
+    private int cycleIndex = 0;
 
-    public Enemy(String name, int maxHP, Intent[] options) {
+    public Enemy(String name, int maxHP, Intent[] options, boolean usesCycle) {
         this.name = name;
         this.maxHP = maxHP;
         this.hp = maxHP;
         this.options = options;
+        this.usesCycle = usesCycle;
     }
     public void describe() {
         System.out.println(name);
@@ -56,6 +59,14 @@ public class Enemy {
     }
     
     public void chooseIntent() { //this assigns value to Enemy's currentIntent field
+        if (usesCycle) {
+            if (cycleIndex > 2) {
+                cycleIndex = 0;
+            }
+            currentIntent = options[cycleIndex];
+            cycleIndex++;
+            return;
+        }
         int totalWeights = 0;
         for (Intent option : options) {
             totalWeights += option.weight;

@@ -4,6 +4,7 @@ public class Main {
     
     public static void main(String[] args) {
         Animal sheep = new Animal("Desert Bighorn Sheep", 37, 37, 7);
+        Animal sheepB = new Animal("Desert Bighorn Sheep", 37, 37, 7);
         /*Animal pupfish = new Animal("Desert Pupfish", 35, 35);
         Animal squirrel = new Animal("Mojave Ground Squirrel", 30, 30);
         Animal tortoise = new Animal("Mojave Desert Tortoise", 47, 47);
@@ -20,21 +21,34 @@ public class Main {
             new Intent("Mark", "DEBUFF", 3, 30),
             new Intent("Ping", "ATTACK", 4, 70)
         };
-        Enemy surveyDrone = new Enemy("Survey Drone", 12, surveyDroneOptions);
+        Enemy surveyDrone = new Enemy("Survey Drone", 12, surveyDroneOptions, false);
 
         Intent[] stakeBotAOptions = {
             new Intent("Stake Strike", "ATTACK", 5, 55),
             new Intent("Protect", "BLOCK", 5, 45)
         };
-        Enemy stakeBotA = new Enemy("Stake Bot A", 16, stakeBotAOptions);
+        Enemy stakeBotA = new Enemy("Stake Bot A", 16, stakeBotAOptions, false);
 
         Intent[] stakeBotBOptions = {
             new Intent("Stake Strike", "ATTACK", 5, 55),
             new Intent("Protect", "BLOCK", 5, 45)
         };
-        Enemy stakeBotB = new Enemy("Stake Bot B", 16, stakeBotBOptions);
+        Enemy stakeBotB = new Enemy("Stake Bot B", 16, stakeBotBOptions, false);
 
-        Enemy[] gang = {stakeBotA, stakeBotB};
+        Intent[] trencherOptions = {
+            new Intent("Wind-up", "CHARGE", 0, 0),
+            new Intent("Wind-up", "CHARGE", 0, 0),
+            new Intent("Tectonic Slam", "ATTACK", 20, 0)
+        };
+        Enemy trencher = new Enemy("The Threncher", 22, trencherOptions, true);
+
+        Intent[] droneAidOptions = {
+            new Intent("Emergency Repair", "HEAL", 6, 50),
+            new Intent("Fly", "BLOCK", 4, 50)
+        };
+        Enemy droneAid = new Enemy("Drone Aid", 8, droneAidOptions, false);
+
+        Enemy[] gang = {stakeBotA, trencher, droneAid};
 
         Battle battle = new Battle(party, gang, 0, scan);
 
