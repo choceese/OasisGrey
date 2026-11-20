@@ -78,7 +78,7 @@ public class Story {
         "and you only have a limited amount before it runs out, so you must manage \nthe vital resource strategically.");
         delay();
         System.out.println("The "+CORAL+"animals"+RESET+" are the "+GOLD+"desert's"+RESET+" last hope. If "+CORAL+"they"+RESET+" all have fallen, or if you are too late, then "+
-        "the \n"+GOLD+"desert"+RESET+" is lost, and what's left will be a "+GREY+"grey oasis of steel."+RESET+" \n\nNow go forth, and fight for the future of the "+GOLD+"sands!"+RESET);
+        "the \n"+GOLD+"desert"+RESET+" is lost, and what's left will be nothing but a "+GREY+"grey oasis of steel."+RESET+" \n\nNow go forth, and fight for the future of the "+GOLD+"sands!"+RESET);
         enterCont();
         clearScreen();
     }
