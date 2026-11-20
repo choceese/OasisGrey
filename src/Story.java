@@ -72,12 +72,12 @@ public class Story {
         "followers, the "+CORAL+"fauna"+RESET+" of the "+GOLD+"desert"+RESET+".");
         delay();
         System.out.println("You began by giving a faithful "+CORAL+"animal"+RESET+" the blessing of strength and protection necessary to "+
-        "fight back \nagainst the construction. Meanwhile, other "+CORAL+"animals"+RESET+" are scattered out there, frightened by the "+GREY+"terrifying \nbeasts "+
-        "of steel."+RESET+" If you manage to gather and bring "+CORAL+"them"+RESET+" under your blessing, the chance for victory \nshall increase "+
+        "fight back \nagainst the construction. Meanwhile, other "+CORAL+"animals"+RESET+" are scattered out there, frightened by the "+GREY+
+        "cold, \nliving steel."+RESET+" If you manage to gather and bring "+CORAL+"them"+RESET+" under your blessing, the chance for victory \nshall increase "+
         "significantly. However, "+CYAN+"water"+RESET+" remains a necessary currency for the "+CORAL+"animals"+RESET+" to utilize \ntheir newfound strength, "+
         "and you only have a limited amount before it runs out, so you must manage \nthe vital resource strategically.");
         delay();
-        System.out.println("The "+CORAL+"animals"+RESET+" are the "+GOLD+"desert's"+RESET+" last hope. If "+CORAL+"they"+RESET+" have all fallen, or if you are too late, then "+
+        System.out.println("The "+CORAL+"animals"+RESET+" are the "+GOLD+"desert's"+RESET+" last hope. If "+CORAL+"they"+RESET+" all have fallen, or if you are too late, then "+
         "the \n"+GOLD+"desert"+RESET+" is lost, and what's left will be a "+GREY+"grey oasis of steel."+RESET+" \n\nNow go forth, and fight for the future of the "+GOLD+"sands!"+RESET);
         enterCont();
         clearScreen();
