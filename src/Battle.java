@@ -65,7 +65,6 @@ public class Battle {
                 seen++;
             }
         }
- 
         return null; // never reached, but Java requires a return at the end
     }
     public void chooseAllIntents() {
