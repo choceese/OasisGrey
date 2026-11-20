@@ -31,7 +31,7 @@ public class Story {
         System.out.flush();
     }
     
-    public static void main(String[] args) {
+    public static void intro() {
         System.out.println("");
         clearScreen();
         System.out.println("It all began in a vast "+GOLD+"desert"+RESET+", with grains of sand that rival the stars of the night sky." + 

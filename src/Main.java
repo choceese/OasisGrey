@@ -1,4 +1,4 @@
-import com.google.gson.Gson; //this is to activate JSON
+// import com.google.gson.Gson; //this is to activate JSON
 import java.util.Scanner;
 public class Main {
     
@@ -51,7 +51,7 @@ public class Main {
         Enemy[] gang = {stakeBotA, trencher, droneAid};
 
         Battle battle = new Battle(party, gang, 0, scan);
-
+        Story.intro();
         battle.run();
         /*
         for (Enemy enemy : enemies) {
