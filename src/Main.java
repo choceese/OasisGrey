@@ -3,20 +3,20 @@ import java.util.Scanner;
 public class Main {
     
     public static void main(String[] args) {
-        Animal sheep = new Animal("Desert Bighorn Sheep", 37, 37, 7);
-        Animal sheepB = new Animal("Desert Bighorn Sheep", 37, 37, 7);
-        /*Animal pupfish = new Animal("Desert Pupfish", 35, 35);
-        Animal squirrel = new Animal("Mojave Ground Squirrel", 30, 30);
-        Animal tortoise = new Animal("Mojave Desert Tortoise", 47, 47);
-        Animal owl = new Animal("Burrowing Owl", 24, 24);
-        Animal lizard = new Animal("Flat-Tailed Horned Lizard", 28, 28);
+        Animal sheep = new Animal("sheep", "Desert Bighorn Sheep", 37, 37, 7, 21);
+        Animal sheepB = new Animal("sheep", "Desert Bighorn Sheep", 37, 37, 7, 21);
+        Animal pupfish = new Animal("pupfish", "Desert Pupfish", 35, 35, 0, 10);
+        Animal squirrel = new Animal("squirrel", "Mojave Ground Squirrel", 30, 30, 0, 0);
+        Animal tortoise = new Animal("tortoise", "Mojave Desert Tortoise", 47, 47, 0, 0);
+        Animal owl = new Animal("owl", "Burrowing Owl", 24, 24, 4, 20);
+        Animal lizard = new Animal("lizard", "Flat-Tailed Horned Lizard", 28, 28, 3, 15);
 
-        Animal[] party = {sheep, pupfish, squirrel, tortoise, owl, lizard};
+        /*Animal[] party = {sheep, pupfish, squirrel, tortoise, owl, lizard};
         for (Animal overview : party) {
             overview.describe();
         } */
         Scanner scan = new Scanner(System.in);
-        Animal[] party = {sheep};
+        Animal[] party = {lizard, owl, sheep};
         Intent[] surveyDroneOptions = {
             new Intent("Mark", "DEBUFF", 3, 30),
             new Intent("Ping", "ATTACK", 4, 70)

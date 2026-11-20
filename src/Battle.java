@@ -8,6 +8,7 @@ public class Battle {
     private int turnCounter = 1;
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
+     //for a While loop to keep looping until one of the IF conditions inside is "handled"
 
     public Battle(Animal[] party, Enemy[] enemies, int water, Scanner scan) {
         this.party = party;
@@ -83,11 +84,13 @@ public class Battle {
         return choice;
     }
     public Enemy chooseEnemyTarget() {
+        System.out.println(" ");
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
                 System.out.println((i + 1) + ") " + enemies[i].getName() + "(" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")");
             }
         }
+        System.out.println("Choose target (number).");
         while (true) {
             int choice = readNumber(enemies.length);
             
@@ -98,10 +101,149 @@ public class Battle {
         }
         
     }
-    public void useBasic(Animal a, Enemy e) { //incomplete. Only able to take damage.
-        int damage = a.getBasic();
-        e.takeDamage(damage);
+    public Animal chooseAllyTarget() {
+        System.out.println(" ");
+        for (int i = 0; i < party.length; i++) {
+            if (party[i] != null && !party[i].isKnockedOut()) {
+                System.out.println((i + 1) + ") " + party[i].getLabel() + "(" + party[i].getHP() + "/" + party[i].getMaxHp() + ")");
+            }
+        }
+        while (true) {
+        System.out.println("Choose target (number).");
+        
+            int choice = readNumber(party.length);
+            
+            if (party[choice - 1] != null && !party[choice - 1].isKnockedOut()) {
+                clearScreen();
+                return party[choice - 1];
+            }
+        }
+        
     }
+    public record animalAndEnemy(Animal a, Enemy e) {}
+    public animalAndEnemy chooseEitherTarget() {
+        System.out.println(" ");
+        int i = 0;
+        int j = 0;
+        for (Animal a : party) {
+            if (a != null && !a.isKnockedOut()) {
+                System.out.println((i + 1) + ") " + a.getName() + "(" + a.getHP() + "/" + a.getMaxHp() + ")");
+                i++;
+            }
+        }
+        int animalNumbers = i;
+        for (Enemy e : enemies) {
+            if (e != null && !e.isKnockedOut()) {
+                System.out.println((i + 1) + ") " + e.getName() + "(" + e.getHP() + "/" + e.getMaxHp() + ")");
+                i++;
+                j++;
+            }
+        }
+        int enemyNumbers = j;
+        while (true) {
+            System.out.println("Choose target (number).");
+            int choice = readNumber(animalNumbers + enemyNumbers);
+            if (choice > 0 && choice <= animalNumbers) {
+                return new animalAndEnemy(party[choice - 1], null);
+            }
+            else if (choice <= (animalNumbers + enemyNumbers)) {
+                return new animalAndEnemy(null, enemies[choice - (animalNumbers) - 1]);
+            }
+        }
+    }
+    public void ourChoicesPrint(Animal a) {
+        if (a.getLabel().equals("sheep")) {
+            System.out.println(" ");
+            System.out.println("(1)Head Ram: deal 7 damage to an enemy.");
+            System.out.println("(2)Cliff Charge: deal 21 damage to an enemy with full health");
+        }
+        else if (a.getLabel().equals("owl")) {
+            System.out.println(" ");
+            System.out.println("(1)Warning Hoot: heal 4 health OR do 4 damage.");
+            System.out.println("(2)Burrow Shelter: heal 20 HP to an ally with less than half HP");
+        }
+        else if (a.getLabel().equals("lizard")) {
+            System.out.println(" ");
+            System.out.println("(1)Sand Spray: deal 3 damage to ALL enemies.");
+            System.out.println("(2)Ambush: do 15 damage to an enemy who is NOT attacking.");
+        }
+    }
+    public boolean everythingAboutBasic(Animal a) { //incomplete. Only able to take damage.
+        int value = a.getBasic();
+        if (a.getLabel().equals("sheep")) {
+            Enemy e = chooseEnemyTarget();
+            e.takeDamage(value);
+        }
+        else if (a.getLabel().equals("owl")) {
+            animalAndEnemy target = chooseEitherTarget();
+            if (target.a == null) {
+                target.e.takeDamage(value);
+            }
+            else {
+                target.a.heal(value);
+            }
+        }
+        else if (a.getLabel().equals("lizard")) {
+            for (Enemy e : enemies) {
+                e.takeDamage(value);
+            }
+        }
+        else if (a.getLabel().equals("tortoise")) {
+            animalAndEnemy target = chooseEitherTarget();
+            if (target.a == null) {
+                target.e.takeDamage(value);
+            }
+            else {
+                target.a.gainBlock(value);
+            }
+        }
+        return true;
+    }
+    public boolean everythingAboutSpecial(Animal a) {
+        int value = a.getSpecial();
+        
+            if (a.getLabel().equals("sheep")) {
+                Enemy e = chooseEnemyTarget();
+                if (e.getHP() == e.getMaxHp()) {
+                    e.takeDamage(value);
+                    return true;
+                }
+            }
+            else if (a.getLabel().equals("owl")) {
+                Animal healTarget = chooseAllyTarget();
+                if (healTarget.getHP() <= healTarget.getMaxHp() / 2) {
+                    healTarget.heal(value);
+                    return true;
+                }
+            }
+            else if (a.getLabel().equals("pupfish")) {
+                int emyCounter = 0;
+                for (Enemy emy : enemies) {
+                    if (emy != null && !emy.isKnockedOut()) {
+                        emyCounter++;
+                    }
+                }
+                if (emyCounter >= 3) {
+                    for (Enemy emy : enemies) {
+                        if (emy != null && !emy.isKnockedOut()) {
+                            emy.takeDamage(value);
+                        }
+                    }
+                    return true;
+                }
+            }
+            else if (a.getLabel().equals("lizard")) {
+                Enemy e = chooseEnemyTarget();
+                String actionLabel = e.getCurrentIntent().type;
+                if (!actionLabel.equals("ATTACK")) {
+                    e.takeDamage(value);
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+    
     public static void clearScreen() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
@@ -143,27 +285,38 @@ public class Battle {
             }
         }
     }
-    public void animalTurn(Animal a) {
+    public void individualAnimalTurn(Animal a) {
+        boolean checkWhileExecuteBasic = false;
+        boolean checkWhileExecuteSuper = false;
         System.out.println(" ");
         System.out.println(" ");
         System.out.println("It's " + a.getName() + "'s turn");
+        do {
+        ourChoicesPrint(a);
         System.out.println(" ");
-        System.out.println("(1)Head Ram: deal 7 damage to an enemy");
-        System.out.println("(2)Cliff Charge: deal 21 damage to an enemy with full health");
+        System.out.println("Pick an option (number).");
         int choiceInput = readNumber(2);
+        
+        
         if (choiceInput == 1) {
-            useBasic(a, chooseEnemyTarget());
+            checkWhileExecuteBasic = everythingAboutBasic(a);
         }
         else {
-            System.out.println("Special not available yet.");
+            checkWhileExecuteSuper = everythingAboutSpecial(a);
         }
+        } while (checkWhileExecuteSuper == false && checkWhileExecuteBasic == false);
     }
     public void playerPhase() {
-        for (Animal a : party) {
-            if (a != null && !a.isKnockedOut()) {
-                animalTurn(a);    
+            for (Animal a : party) {
+                if (!areEnemiesDefeated()) {
+                    if (a != null && !a.isKnockedOut()) {
+                        individualAnimalTurn(a);    
+                    }
+                }
+                
             }
-        }
+        
+        
     }
     public void endRound() {
         //reset all animals block/status to 0
@@ -206,7 +359,7 @@ public class Battle {
             if (target != null) {
                 target.mark(intent.value);
                 System.out.println(e.getName() + " uses " + intent.label
-                    + " on " + target.getName());
+                    + " on " + target.getLabel());
             }
         }
     }

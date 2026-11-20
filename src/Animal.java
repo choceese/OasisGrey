@@ -1,20 +1,24 @@
 public class Animal {
+        private String label;
         private String name;
         private int hp;
         private int maxHP;
         private int block = 0;
         private int markBonus;
         private int basicDamage;
+        private int specialValue;
 
-        Animal (String name, int hp, int maxHP, int basicDamage) { //retire is "is the animal dead or not?"
+        Animal (String label, String name, int hp, int maxHP, int basicDamage, int specialValue) { //retire is "is the animal dead or not?"
+            this.label = label;
             this.name = name;
             this.hp = hp;
             this.maxHP = maxHP;
             this.basicDamage = basicDamage;
+            this.specialValue = specialValue;
             block = 0;
         }
         public void describe () {
-            System.out.println(name);
+            System.out.println(label);
             System.out.println("HP: " + hp + "/" + maxHP);
         }
         public void mark(int bonus) {
@@ -33,7 +37,9 @@ public class Animal {
             if (hp > maxHP) {
                 hp = maxHP;
             }
-            
+        }
+        public void gainBlock(int blockAmount) {
+            block += blockAmount;
         }
         public boolean isKnockedOut() {
             if (hp == 0) {
@@ -43,6 +49,9 @@ public class Animal {
                 return false;
             }
     
+        }
+        public String getLabel() {
+            return label;
         }
         public String getName() {
             return name;
@@ -55,6 +64,9 @@ public class Animal {
         }
         public int getBasic() {
             return basicDamage;
+        }
+        public int getSpecial() {
+            return specialValue;
         }
         
             
