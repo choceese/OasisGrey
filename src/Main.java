@@ -59,21 +59,21 @@ public class Main {
             System.out.print(current intent)
         }
         while (areEnemiesDefeated = false) {
-          for (Animal unit : party) {
-            chooseAbility = scan.nextInt();
-            if (chooseAbility = 1) {
-                basicSkill 
-            }
-            else {
-                specialSkill    
-            }
-            for (Enemy enemy : enemies) {
+            for (Animal unit : party) {
+                chooseAbility = scan.nextInt();
+                if (chooseAbility = 1) {
+                    basicSkill 
+                }
+                else {
+                    specialSkill    
+                }
+                for (Enemy enemy : enemies) {
 
+                }
+                for (Enemy enemy : enemies) {
+                    enemy.executeIntent
+                }
             }
-            for (Enemy enemy : enemies) {
-                enemy.executeIntent
-            }
-          }
         }
     
         
