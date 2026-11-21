@@ -39,11 +39,6 @@ public class Story {
         "Eventually, you became worshipped \nby the "+GOLD+"desert"+CORAL+" wildlife"+RESET+" as the Spirit of the Springs. "+
         "The "+CYAN+"waters"+RESET+" are your life force and a vital \nresource for all life, especially in the dry ecosystem. "+
         "Without them, life in the \n"+GOLD+"desert"+RESET+" would simply cease to exist.",
-
-        "Then came the humans, beasts who once utilized sticks and stones to survive in ancient times. "+
-        "\nHowever, they have evolved drastically as time goes by. They have created vast settlements, giant "+
-        "\nbeetles with wheels as well as birds from cold, lifeless "+GREY+"steel,"+RESET+" "+
-        "and now, "+GREY+"steel that can \nimitate the intellect of the clever primates."+RESET
     };
     public static final String[] PAGE_2 = {
         "Recently, the humans, aided by the thinking steel they call "+GREY+"'robots'"+RESET+", have invaded the "+GOLD+"desert"+RESET+" "+
