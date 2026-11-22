@@ -263,7 +263,7 @@ public class Battle {
     public void showBattleState() {
         System.out.println(" ");
         System.out.println(" ");
-        System.out.println(">>>>>TURN " + turnCounter + " <<<<<");
+        System.out.println(">>>>> TURN " + CYAN+ turnCounter +RESET + " <<<<<");
         System.out.println(" ");
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && enemies[i].isKnockedOut()) {
@@ -290,7 +290,7 @@ public class Battle {
         }
         System.out.println(" ");
         System.out.println("   ");
-        System.out.println("=======");
+        System.out.println("=====================================================================================");
         System.out.println("   ");
         for (int i = 0; i < party.length; i++) {
             if (party[i] != null && !party[i].isKnockedOut()) {
@@ -402,11 +402,10 @@ public class Battle {
         }
         if (isPartyDefeated()) {
             System.out.println(" ");
-            System.out.println("Tragic death. Better luck next time.");
-            System.out.println("Wanna hear a joke?");
-            System.out.println("Home.");
-            System.out.println("......");
-            System.out.println("You don't get it? Exactly.");
+            System.out.println("Tragic death. Better luck in another timeline...");
+            System.out.println(" ");
+            Story.enterCont();
+            Story.badending1();
         }
         else {
             System.out.println(" ");
