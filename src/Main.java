@@ -1,4 +1,4 @@
-import com.google.gson.Gson; //this is to activate JSON
+// import com.google.gson.Gson; //this is to activate JSON
 import java.util.Scanner;
 public class Main {
     
@@ -52,8 +52,7 @@ public class Main {
 
         Water mizu = new Water(30);
 
-        Battle battle = new Battle(party, gang, mizu, scan); //The absolute CORE of the entire code
-
+        Battle battle = new Battle(party, gang, mizu, scan);
         battle.run();
         /*
         for (Enemy enemy : enemies) {
@@ -61,21 +60,21 @@ public class Main {
             System.out.print(current intent)
         }
         while (areEnemiesDefeated = false) {
-          for (Animal unit : party) {
-            chooseAbility = scan.nextInt();
-            if (chooseAbility = 1) {
-                basicSkill 
-            }
-            else {
-                specialSkill    
-            }
-            for (Enemy enemy : enemies) {
+            for (Animal unit : party) {
+                chooseAbility = scan.nextInt();
+                if (chooseAbility = 1) {
+                    basicSkill 
+                }
+                else {
+                    specialSkill    
+                }
+                for (Enemy enemy : enemies) {
 
+                }
+                for (Enemy enemy : enemies) {
+                    enemy.executeIntent
+                }
             }
-            for (Enemy enemy : enemies) {
-                enemy.executeIntent
-            }
-          }
         }
     
         
