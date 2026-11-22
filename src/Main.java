@@ -50,7 +50,9 @@ public class Main {
 
         Enemy[] gang = {stakeBotA, trencher, droneAid};
 
-        Battle battle = new Battle(party, gang, 0, scan);
+        Water mizu = new Water(30);
+
+        Battle battle = new Battle(party, gang, mizu, scan); //The absolute CORE of the entire code
 
         battle.run();
         /*

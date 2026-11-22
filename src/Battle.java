@@ -4,16 +4,17 @@ import java.util.Scanner;
 public class Battle {
     private Animal[] party;
     private Enemy[] enemies;
+    private Water mizu;
     private int water;
     private int turnCounter = 1;
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
      //for a While loop to keep looping until one of the IF conditions inside is "handled"
 
-    public Battle(Animal[] party, Enemy[] enemies, int water, Scanner scan) {
+    public Battle(Animal[] party, Enemy[] enemies, Water mizu, Scanner scan) {
         this.party = party;
         this.enemies = enemies;
-        this.water = water;
+        this.mizu = mizu;
         this.scan = scan;
 
     }
@@ -203,15 +204,17 @@ public class Battle {
         
             if (a.getLabel().equals("sheep")) {
                 Enemy e = chooseEnemyTarget();
-                if (e.getHP() == e.getMaxHp()) {
+                if (e.getHP() == e.getMaxHp() && (mizu.getWater() >= 3)) {
                     e.takeDamage(value);
+                    mizu.takeEvaporate(3);
                     return true;
                 }
             }
             else if (a.getLabel().equals("owl")) {
                 Animal healTarget = chooseAllyTarget();
-                if (healTarget.getHP() <= healTarget.getMaxHp() / 2) {
+                if (healTarget.getHP() <= healTarget.getMaxHp() / 2 && (mizu.getWater() >= 3)) {
                     healTarget.heal(value);
+                    mizu.takeEvaporate(3);
                     return true;
                 }
             }
@@ -222,10 +225,11 @@ public class Battle {
                         emyCounter++;
                     }
                 }
-                if (emyCounter >= 3) {
+                if (emyCounter >= 3 && (mizu.getWater() >= 3)) {
                     for (Enemy emy : enemies) {
                         if (emy != null && !emy.isKnockedOut()) {
                             emy.takeDamage(value);
+                            mizu.takeEvaporate(3);
                         }
                     }
                     return true;
@@ -234,8 +238,9 @@ public class Battle {
             else if (a.getLabel().equals("lizard")) {
                 Enemy e = chooseEnemyTarget();
                 String actionLabel = e.getCurrentIntent().type;
-                if (!actionLabel.equals("ATTACK")) {
+                if (!actionLabel.equals("ATTACK") && ((mizu.getWater() >= 2))) {
                     e.takeDamage(value);
+                    mizu.takeEvaporate(2);
                     return true;
                 }
             }
@@ -306,15 +311,17 @@ public class Battle {
         } while (checkWhileExecuteSuper == false && checkWhileExecuteBasic == false);
     }
     public void playerPhase() {
-            for (Animal a : party) {
-                if (!areEnemiesDefeated()) {
-                    if (a != null && !a.isKnockedOut()) {
-                        individualAnimalTurn(a);    
-                    }
+        System.out.println("Choose animal to act. (number).");
+        int choice = 0;
+        for (Animal animal : party) {
+            do {
+                choice = scan.nextInt();
+                if (party[choice - 1] != null && !party[choice - 1].isKnockedOut()) {
+                    individualAnimalTurn(party[choice - 1]);    
                 }
-                
             }
-        
+            while ((choice - 1) < 0 || (choice - 1) >= party.length);
+        }
         
     }
     public void endRound() {
