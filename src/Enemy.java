@@ -32,6 +32,9 @@ public class Enemy {
         hp = Math.max(0, hp - amount);
         System.out.println(name + " takes " + amount + " damage!");
 }
+    public int getBlock() {
+        return block;
+    }
     public void gainBlock(int amount) {
         block += amount;
     }
@@ -39,7 +42,6 @@ public class Enemy {
     public void resetBlock() {
         block = 0;
     }
-    
     
     public void heal(int healAmount) {
             hp += healAmount;

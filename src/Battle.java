@@ -12,8 +12,11 @@ public class Battle {
     public static final String GOLD = "\u001B[38;5;222m";
     public static final String CORAL = "\u001B[38;5;210m";
     public static final String GREY = "\u001B[38;5;103m";
+    public static final String LIGHTGREY = "\u001B[38;5;37m";
     public static final String ORANGE= "\u001B[38;5;223m";
     public static final String PURPLE = "\u001B[38;5;177m";
+    public static final String PINK = "\u001B[38;5;218m";
+
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
      //for a While loop to keep looping until one of the IF conditions inside is "handled"
@@ -265,16 +268,19 @@ public class Battle {
         System.out.println(" ");
         System.out.println(">>>>> TURN " + CYAN+ turnCounter +RESET + " <<<<<");
         System.out.println(" ");
+        int barLength = 0;
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && enemies[i].isKnockedOut()) {
                 String dead = "(dead)";
                 System.out.printf("%-28s", dead);
+                barLength += dead.length() + (28-dead.length());
             }
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
                 String enemyName = enemies[i].getName();
                 String enemyHP = " (" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")";
-                int pad = 28 - (enemyName.length() + enemyHP.length());
-                System.out.print(GREY + enemyName + RESET + PURPLE + enemyHP + RESET + " ".repeat(Math.max(0, pad)));
+                int statsPad = 28 - (enemyName.length() + enemyHP.length());
+                System.out.print(GREY + enemyName + RESET + PURPLE + enemyHP + RESET + " ".repeat(Math.max(0, statsPad)));
+                barLength += enemyName.length() + enemyHP.length() + statsPad;
             }
         }
         System.out.println(" ");
@@ -289,9 +295,17 @@ public class Battle {
             }
         }
         System.out.println(" ");
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i] != null && !enemies[i].isKnockedOut()) {
+                String enemyBlock = (enemies[i].getBlock() > 0) ? "[Block: " + enemies[i].getBlock() + "] " : "";
+                int blockPad = 28 - (enemyBlock.length());
+                System.out.print(PINK + enemyBlock + RESET + " ".repeat(Math.max(0, blockPad)));
+            }
+        }
         System.out.println("   ");
-        System.out.println("=====================================================================================");
+        System.out.println("=".repeat(Math.max(0, barLength)));
         System.out.println("   ");
+        System.out.println(CYAN + "Water: " + mizu.getWater() + RESET);
         for (int i = 0; i < party.length; i++) {
             if (party[i] != null && !party[i].isKnockedOut()) {
                 System.out.println(ORANGE+party[i].getName() +RESET+CORAL+" (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")" + RESET);
@@ -331,7 +345,6 @@ public class Battle {
             }
             while ((choice - 1) < 0 || (choice - 1) >= party.length);
         }
-        
     }
     public void endRound() {
         //reset all animals block/status to 0
