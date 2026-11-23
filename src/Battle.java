@@ -119,6 +119,8 @@ public class Battle {
             if (enemies[choice - 1] != null && !enemies[choice - 1].isKnockedOut()) {
                 clearScreen();
                 return enemies[choice - 1];
+            } else {
+                System.out.println("That target is already defeated. Choose another.");
             }
         }
     }
@@ -137,6 +139,8 @@ public class Battle {
             if (party[choice - 1] != null && !party[choice - 1].isKnockedOut()) {
                 clearScreen();
                 return party[choice - 1];
+            } else {
+                System.out.println("That ally is knocked out. Choose another.");
             }
         }
         
@@ -212,7 +216,9 @@ public class Battle {
         }
         else if (a.getLabel().equals("lizard")) {
             for (Enemy e : enemies) {
-                e.takeDamage(value);
+                if (e != null && !e.isKnockedOut()) {
+                    e.takeDamage(value);
+                }
             }
         }
         else if (a.getLabel().equals("tortoise")) {
@@ -266,15 +272,21 @@ public class Battle {
                         emyCounter++;
                     }
                 }
-                if (emyCounter >= 3 && (mizu.getWater() >= 3)) {
-                    for (Enemy emy : enemies) {
-                        if (emy != null && !emy.isKnockedOut()) {
-                            emy.takeDamage(value);
-                            mizu.takeEvaporate(3);
-                        }
-                    }
-                    return true;
+                if (emyCounter < 3) {
+                    System.out.println("Special failed: need at least 3 active enemies.");
+                    return false;
                 }
+                if (mizu.getWater() < 3) {
+                    System.out.println("Special failed: not enough Water (needs 3).");
+                    return false;
+                }
+                for (Enemy emy : enemies) {
+                    if (emy != null && !emy.isKnockedOut()) {
+                        emy.takeDamage(value);
+                    }
+                }
+                mizu.takeEvaporate(3);
+                return true;
             }
             else if (a.getLabel().equals("lizard")) {
                 if (mizu.getWater() < 2) {
@@ -418,10 +430,10 @@ public class Battle {
             }
         } 
         else if (intent.type.equals("STEAL_WATER")) {
-            water = Math.max(0, water - intent.value);
+            mizu.takeEvaporate(intent.value);
             System.out.println(e.getName() + " uses " + intent.label
                 + " and steals " + intent.value + " Water");
-        } 
+        }
         else if (intent.type.equals("HEAL")) {
             e.heal(intent.value);   // heals itself for now
             System.out.println(e.getName() + " uses " + intent.label);
@@ -440,7 +452,7 @@ public class Battle {
             if (target != null) {
                 target.mark(intent.value);
                 System.out.println(e.getName() + " uses " + intent.label
-                    + " on " + target.getLabel());
+                    + " on " + target.getName());
             }
         }
     }
