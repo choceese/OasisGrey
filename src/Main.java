@@ -51,7 +51,7 @@ public class Main {
         Enemy[] gang = {stakeBotA, trencher, droneAid};
 
         Water mizu = new Water(30);
-        // Story.intro();
+        Story.intro();
         Battle battle = new Battle(party, gang, mizu, scan);
         battle.run();
         /*
