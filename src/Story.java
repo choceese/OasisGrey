@@ -13,7 +13,7 @@ public class Story {
     }
     public static void delay(){
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2500);
             System.out.println("");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -22,7 +22,7 @@ public class Story {
     public static void enterCont(){
         Scanner scan = new Scanner(System.in);
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2500);
             System.out.println("");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -84,8 +84,11 @@ public class Story {
     }
     public static void intro() {
         passageIntro(Intro1);
+        System.out.println(" ");
         passageIntro(Intro2);
+        System.out.println(" ");
         passageIntro(Intro3);
+        System.out.println(" ");
     }
     public static final String[] BadEnd1 = {
         "Alas, the "+CORAL+"last hope of "+GOLD+"the desert"+RESET+" has fallen in battle, and now, none shall be able to halt the \nconstruction "+
