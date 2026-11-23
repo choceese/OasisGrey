@@ -86,12 +86,20 @@ public class Battle {
         }
     }
     public int readNumber(int limit) {
-        int choice = scan.nextInt();
-        while (choice < 1 || choice > limit) {
-            System.out.println("Pick an existing number from the options");
-            choice = scan.nextInt();
+        while (true) {
+            if (!scan.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine();
+                continue;
+            }
+            int choice = scan.nextInt();
+            scan.nextLine();
+            if (choice < 1 || choice > limit) {
+                System.out.println("Pick an existing number from the options.");
+                continue;
+            }
+            return choice;
         }
-        return choice;
     }
     public Enemy chooseEnemyTarget() {
         System.out.println(" ");
@@ -310,7 +318,8 @@ public class Battle {
         System.out.println(CYAN + "Water: " + mizu.getWater() + RESET);
         for (int i = 0; i < party.length; i++) {
             if (party[i] != null && !party[i].isKnockedOut()) {
-                System.out.println(ORANGE+party[i].getName() +RESET+CORAL+" (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")" + RESET);
+                String animalBlock = " [Block: " + party[i].getBlock() + "]";
+                System.out.println(ORANGE+party[i].getName() +RESET+CORAL+" (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")" + RESET + GOLD + animalBlock + RESET);
             }
         }
     }
@@ -336,16 +345,21 @@ public class Battle {
         } while (checkWhileExecuteSuper == false && checkWhileExecuteBasic == false);
     }
     public void playerPhase() {
-        System.out.println("Choose animal to act. (number).");
-        int choice = 0;
-        for (Animal animal : party) {
-            do {
-                choice = scan.nextInt();
-                if (party[choice - 1] != null && !party[choice - 1].isKnockedOut()) {
-                    individualAnimalTurn(party[choice - 1]);    
-                }
+        for (int i = 0; i < party.length; i++) {
+            if (party[i] == null || party[i].isKnockedOut()) {
+                continue;
             }
-            while ((choice - 1) < 0 || (choice - 1) >= party.length);
+            System.out.println("Choose animal to act. (number).");
+            while (true) {
+                int choice = readNumber(party.length);
+                Animal selected = party[choice - 1];
+                if (selected == null || selected.isKnockedOut()) {
+                    System.out.println("That animal is knocked out or unavailable. Pick another.");
+                    continue;
+                }
+                individualAnimalTurn(selected);
+                break;
+            }
         }
     }
     public void endRound() {

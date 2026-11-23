@@ -38,6 +38,9 @@ public class Animal {
                 hp = maxHP;
             }
         }
+        public int getBlock() {
+            return block;
+        }
         public void gainBlock(int blockAmount) {
             block += blockAmount;
         }
