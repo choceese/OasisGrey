@@ -285,6 +285,14 @@ public class Battle {
         }
         System.out.println(" ");
         for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i] != null && !enemies[i].isKnockedOut()) {
+                String enemyBlock = (enemies[i].getBlock() > 0) ? "[Block: " + enemies[i].getBlock() + "] " : "";
+                int blockPad = 28 - (enemyBlock.length());
+                System.out.print(PINK + enemyBlock + RESET + " ".repeat(Math.max(0, blockPad)));
+            }
+        }
+        System.out.println(" ");
+        for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && enemies[i].isKnockedOut()) {
                 System.out.printf("%-28s", " ");
             }
@@ -295,13 +303,7 @@ public class Battle {
             }
         }
         System.out.println(" ");
-        for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] != null && !enemies[i].isKnockedOut()) {
-                String enemyBlock = (enemies[i].getBlock() > 0) ? "[Block: " + enemies[i].getBlock() + "] " : "";
-                int blockPad = 28 - (enemyBlock.length());
-                System.out.print(PINK + enemyBlock + RESET + " ".repeat(Math.max(0, blockPad)));
-            }
-        }
+        
         System.out.println("   ");
         System.out.println("=".repeat(Math.max(0, barLength)));
         System.out.println("   ");
