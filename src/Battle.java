@@ -105,7 +105,11 @@ public class Battle {
         System.out.println(" ");
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
-                System.out.println((i + 1) + ") " + GREY+enemies[i].getName()+RESET + PURPLE+" (" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")"+RESET);
+                Intent intent = enemies[i].getCurrentIntent();
+                String intentText = (intent != null) ? " [" + intent.type + "]" : "";
+                System.out.println((i + 1) + ") " + GREY + enemies[i].getName() + RESET
+                    + PURPLE + " (" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")" + RESET
+                    + CYAN + intentText + RESET);
             }
         }
         System.out.println("Choose target (number).");
@@ -117,13 +121,12 @@ public class Battle {
                 return enemies[choice - 1];
             }
         }
-        
     }
     public Animal chooseAllyTarget() {
         System.out.println(" ");
         for (int i = 0; i < party.length; i++) {
             if (party[i] != null && !party[i].isKnockedOut()) {
-                System.out.println((i + 1) + ") " + ORANGE+party[i].getLabel()+RESET + CORAL+" (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")"+RESET);
+                System.out.println((i + 1) + ") " + ORANGE+party[i].getName()+RESET + CORAL+" (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")"+RESET);
             }
         }
         while (true) {
@@ -152,7 +155,9 @@ public class Battle {
         int animalNumbers = i;
         for (Enemy e : enemies) {
             if (e != null && !e.isKnockedOut()) {
-                System.out.println((i + 1) + ") " + GREY+e.getName()+RESET + PURPLE+" (" + e.getHP() + "/" + e.getMaxHp() + ")"+RESET);
+                Intent intent = e.getCurrentIntent();
+                String intentText = (intent != null) ? " [" + intent.type + "]" : "";
+                System.out.println((i + 1) + ") " + GREY+e.getName()+RESET + PURPLE+" (" + e.getHP() + "/" + e.getMaxHp() + ")"+RESET + CYAN + intentText + RESET);
                 i++;
                 j++;
             }
@@ -198,6 +203,10 @@ public class Battle {
                 target.e.takeDamage(value);
             }
             else {
+                if (target.a.getHP() == target.a.getMaxHp()){
+                    System.out.println("Warning Hoot failed: ally already has full HP.");
+                    return false;
+                }
                 target.a.heal(value);
             }
         }
@@ -221,19 +230,33 @@ public class Battle {
         int value = a.getSpecial();
         
             if (a.getLabel().equals("sheep")) {
+                if (mizu.getWater() < 3) {
+                    System.out.println("Cliff Charge failed: not enough Water (needs 3).");
+                    return false;
+                }
                 Enemy e = chooseEnemyTarget();
-                if (e.getHP() == e.getMaxHp() && (mizu.getWater() >= 3)) {
+                if (e.getHP() == e.getMaxHp()) {
                     e.takeDamage(value);
                     mizu.takeEvaporate(3);
                     return true;
+                } else {
+                    System.out.println("Cliff Charge failed: enemy's HP is not full.");
+                    return false;
                 }
             }
             else if (a.getLabel().equals("owl")) {
+                if (mizu.getWater() < 3) {
+                    System.out.println("Burrow Shelter failed: not enough Water (needs 3).");
+                    return false;
+                }
                 Animal healTarget = chooseAllyTarget();
-                if (healTarget.getHP() <= healTarget.getMaxHp() / 2 && (mizu.getWater() >= 3)) {
+                if (healTarget.getHP() <= healTarget.getMaxHp() / 2) {
                     healTarget.heal(value);
                     mizu.takeEvaporate(3);
                     return true;
+                } else {
+                    System.out.println("Burrow Shelter failed: ally still has more than half HP.");
+                    return false;
                 }
             }
             else if (a.getLabel().equals("pupfish")) {
@@ -254,12 +277,19 @@ public class Battle {
                 }
             }
             else if (a.getLabel().equals("lizard")) {
+                if (mizu.getWater() < 2) {
+                    System.out.println("Ambush failed: not enough Water (needs 2).");
+                    return false;
+                }
                 Enemy e = chooseEnemyTarget();
                 String actionLabel = e.getCurrentIntent().type;
-                if (!actionLabel.equals("ATTACK") && ((mizu.getWater() >= 2))) {
+                if (!actionLabel.equals("ATTACK")) {
                     e.takeDamage(value);
                     mizu.takeEvaporate(2);
                     return true;
+                } else {
+                    System.out.println("Ambush failed: target is planning to ATTACK.");
+                    return false;
                 }
             }
             return false;
@@ -269,6 +299,18 @@ public class Battle {
     public static void clearScreen() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
+    }
+
+    public void printPartyChoices() {
+        System.out.println(" ");
+        for (int i = 0; i < party.length; i++) {
+            if (party[i] != null && !party[i].isKnockedOut()) {
+                String animalBlock = (party[i].getBlock() > 0) ? " [Block: " + party[i].getBlock() + "]" : "";
+                System.out.println((i + 1) + ") " + ORANGE + party[i].getName() + RESET
+                + CORAL + " (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")" + RESET
+                + GOLD + animalBlock + RESET);
+            }
+        }
     }
 
     public void showBattleState() {
@@ -316,12 +358,6 @@ public class Battle {
         System.out.println("=".repeat(Math.max(0, barLength)));
         System.out.println("   ");
         System.out.println(CYAN + "Water: " + mizu.getWater() + RESET);
-        for (int i = 0; i < party.length; i++) {
-            if (party[i] != null && !party[i].isKnockedOut()) {
-                String animalBlock = " [Block: " + party[i].getBlock() + "]";
-                System.out.println(ORANGE+party[i].getName() +RESET+CORAL+" (" + party[i].getHP() + "/" + party[i].getMaxHp() + ")" + RESET + GOLD + animalBlock + RESET);
-            }
-        }
     }
     public void individualAnimalTurn(Animal a) {
         boolean checkWhileExecuteBasic = false;
@@ -349,6 +385,7 @@ public class Battle {
             if (party[i] == null || party[i].isKnockedOut()) {
                 continue;
             }
+            printPartyChoices();
             System.out.println("Choose animal to act. (number).");
             while (true) {
                 int choice = readNumber(party.length);
@@ -425,9 +462,12 @@ public class Battle {
             if (areEnemiesDefeated()) {
                 break;
             }
+            System.out.println("");
             enemyPhase();
+            System.out.println("");
+            System.out.print("Press enter to continue...");
+            scan.nextLine();
             endRound();
-            
         }
         if (isPartyDefeated()) {
             System.out.println(" ");
