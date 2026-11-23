@@ -37,6 +37,7 @@ public class Animal {
             if (hp > maxHP) {
                 hp = maxHP;
             }
+            System.out.println(name + " got healed by " + healAmount + " HP!");
         }
         public int getBlock() {
             return block;
