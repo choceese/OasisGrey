@@ -19,7 +19,8 @@ public class Main {
         Animal[] party = {lizard, owl, sheep};
         Intent[] surveyDroneOptions = {
             new Intent("Mark", "DEBUFF", 3, 30),
-            new Intent("Ping", "ATTACK", 4, 70)
+            new Intent("Ping", "ATTACK", 4, 70),
+            new Intent("Siphon", "STEAL_WATER", 3, 25)
         };
         Enemy surveyDrone = new Enemy("Survey Drone", 12, surveyDroneOptions, false);
 
