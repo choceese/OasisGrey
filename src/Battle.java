@@ -324,7 +324,6 @@ public class Battle {
             }
         }
     }
-
     public void showBattleState() {
         System.out.println(" ");
         System.out.println(" ");
@@ -345,12 +344,15 @@ public class Battle {
                 barLength += enemyName.length() + enemyHP.length() + statsPad;
             }
         }
+        
         System.out.println(" ");
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
                 String enemyBlock = (enemies[i].getBlock() > 0) ? "[Block: " + enemies[i].getBlock() + "] " : "";
                 int blockPad = 28 - (enemyBlock.length());
                 System.out.print(PINK + enemyBlock + RESET + " ".repeat(Math.max(0, blockPad)));
+            } else {
+                System.out.print( " ".repeat(Math.max(0, 28)));
             }
         }
         System.out.println(" ");
@@ -472,6 +474,7 @@ public class Battle {
             }
         }
     }
+    
     public void run() {
         while (!areEnemiesDefeated() && !isPartyDefeated()) { //both either returns true or false
             chooseAllIntents();
