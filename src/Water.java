@@ -1,9 +1,10 @@
 public class Water {
     private int waterMaxHp;
-    private int waterHp = waterMaxHp;
+    private int waterHp;
 
     public Water (int waterMaxHp) {
         this.waterMaxHp = waterMaxHp;
+        this.waterHp = waterMaxHp;
     }
 
     public void takeEvaporate(int damage) {
