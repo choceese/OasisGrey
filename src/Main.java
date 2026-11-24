@@ -49,10 +49,16 @@ public class Main {
         };
         Enemy droneAid = new Enemy("Drone Aid", 8, droneAidOptions, false);
 
-        Enemy[] gang = {stakeBotA, trencher, droneAid, surveyDrone};
+        Intent[] vSiphonOptions = {
+            new Intent("Heat Blow", "STEAL_WATER", 6, 60),
+            new Intent("Cooling", "HEAL", 10, 40)
+        };
+        Enemy vSiphon = new Enemy("V-Siphon", 35, vSiphonOptions, false);
+
+        Enemy[] gang = {stakeBotA, trencher, droneAid, surveyDrone, vSiphon};
 
         Water mizu = new Water(30);
-        Story.intro();
+        // Story.intro();
         Battle battle = new Battle(party, gang, mizu, scan);
         battle.run();
         /*

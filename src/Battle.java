@@ -393,6 +393,7 @@ public class Battle {
         } while (checkWhileExecuteSuper == false && checkWhileExecuteBasic == false);
     }
     public void playerPhase() {
+        boolean[] hasActed = new boolean[party.length];
         for (int i = 0; i < party.length; i++) {
             if (party[i] == null || party[i].isKnockedOut()) {
                 continue;
@@ -405,9 +406,14 @@ public class Battle {
                 if (selected == null || selected.isKnockedOut()) {
                     System.out.println("That animal is knocked out or unavailable. Pick another.");
                     continue;
+                } else if (hasActed[choice - 1] == true){
+                    System.out.println("That animal has already acted.");
+                    continue;
                 }
                 individualAnimalTurn(selected);
+                hasActed[choice - 1] = true;
                 break;
+
             }
         }
     }
