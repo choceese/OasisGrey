@@ -48,7 +48,7 @@ public class Main {
         };
         Enemy droneAid = new Enemy("Drone Aid", 8, droneAidOptions, false);
 
-        Enemy[] gang = {stakeBotA, trencher, droneAid};
+        Enemy[] gang = {stakeBotA, trencher, droneAid, surveyDrone};
 
         Water mizu = new Water(30);
         Story.intro();
