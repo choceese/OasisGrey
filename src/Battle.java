@@ -441,7 +441,7 @@ public class Battle {
                 + " and steals " + intent.value + " Water");
         }
         else if (intent.type.equals("HEAL")) {
-            e.heal(intent.value);   // heals itself for now
+            e.heal(intent.value);
             System.out.println(e.getName() + " uses " + intent.label);
         } 
         else if (intent.type.equals("CHARGE")) {
