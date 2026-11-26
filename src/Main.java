@@ -49,7 +49,7 @@ public class Main {
         Enemy droneAid = new Enemy("Drone Aid", 8, droneAidOptions, false);
 
         Intent[] vSiphonOptions = {
-            new Intent("Heat Blow", "STEAL_WATER", 6, 60),
+            new Intent("Heat Blow", "STEAL WATER", 6, 60),
             new Intent("Cooling", "HEAL", 10, 40)
         };
         Enemy vSiphon = new Enemy("V-Siphon", 35, vSiphonOptions, false);
