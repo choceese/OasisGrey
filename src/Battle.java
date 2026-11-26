@@ -182,17 +182,17 @@ public class Battle {
         if (a.getLabel().equals("sheep")) {
             System.out.println(" ");
             System.out.println("(1) Head Ram: deal 7 damage to an enemy.");
-            System.out.println("(2) Cliff Charge: deal 21 damage to an enemy with full health");
+            System.out.println("(2) Cliff Charge "+CYAN+"(needs 3 water)"+RESET+": deal 21 damage to an enemy with full health");
         }
         else if (a.getLabel().equals("owl")) {
             System.out.println(" ");
             System.out.println("(1) Warning Hoot: heal 4 health OR do 4 damage.");
-            System.out.println("(2) Burrow Shelter: heal 20 HP to an ally with less than half HP");
+            System.out.println("(2) Burrow Shelter "+CYAN+"(needs 3 water) "+RESET+": heal 20 HP to an ally with less than half HP");
         }
         else if (a.getLabel().equals("lizard")) {
             System.out.println(" ");
             System.out.println("(1) Sand Spray: deal 3 damage to ALL enemies.");
-            System.out.println("(2) Ambush: do 15 damage to an enemy who is NOT attacking.");
+            System.out.println("(2) Ambush "+CYAN+"(needs 2 water) "+RESET+": do 15 damage to an enemy who is NOT attacking.");
         }
     }
     public boolean everythingAboutBasic(Animal a) { //incomplete. Only able to take damage.
@@ -349,9 +349,11 @@ public class Battle {
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
                 String enemyBlock = (enemies[i].getBlock() > 0) ? "[Block: " + enemies[i].getBlock() + "] " : "";
                 int blockPad = 28 - (enemyBlock.length());
-                System.out.print(PINK + enemyBlock + RESET + " ".repeat(Math.max(0, blockPad)));
+                System.out.print(PINK);
+                System.out.printf("%-28s", enemyBlock);
+                System.out.print(RESET);
             } else {
-                System.out.print( " ".repeat(Math.max(0, 28)));
+                System.out.printf("%-28s", " ");
             }
         }
         System.out.println(" ");
