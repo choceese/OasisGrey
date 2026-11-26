@@ -334,15 +334,14 @@ public class Battle {
             if (enemies[i] != null && enemies[i].isKnockedOut()) {
                 String dead = "(dead)";
                 System.out.printf("%-28s", dead);
-                barLength += dead.length() + (28-dead.length());
             }
             if (enemies[i] != null && !enemies[i].isKnockedOut()) {
                 String enemyName = enemies[i].getName();
                 String enemyHP = " (" + enemies[i].getHP() + "/" + enemies[i].getMaxHp() + ")";
                 int statsPad = 28 - (enemyName.length() + enemyHP.length());
                 System.out.print(GREY + enemyName + RESET + PURPLE + enemyHP + RESET + " ".repeat(Math.max(0, statsPad)));
-                barLength += enemyName.length() + enemyHP.length() + statsPad;
             }
+            barLength += 28;
         }
         
         System.out.println(" ");
@@ -437,7 +436,7 @@ public class Battle {
                     + " on " + target.getName() + " for " + intent.value);
             }
         } 
-        else if (intent.type.equals("STEAL_WATER")) {
+        else if (intent.type.equals("STEAL WATER")) {
             mizu.takeEvaporate(intent.value);
             System.out.println(e.getName() + " uses " + intent.label
                 + " and steals " + intent.value + " Water");
